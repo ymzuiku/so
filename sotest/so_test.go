@@ -43,12 +43,12 @@ func TestAssetx(t *testing.T) {
 
 	t.Run("true", func(t *testing.T) {
 		err := dog()
-		so.True(t, err != nil, err)
+		so.True(t, err != nil)
 	})
 
 	t.Run("false", func(t *testing.T) {
 		err := dog()
-		so.False(t, err == nil, err)
+		so.False(t, err == nil)
 	})
 
 	t.Run("equal", func(t *testing.T) {

@@ -9,11 +9,10 @@ import (
 
 func line() string {
 	_, file, line, ok := runtime.Caller(2)
-	// f := runtime.FuncForPC(pc)
 	if !ok {
 		return "[so]LineError runtime.Caller(2) Fail"
 	}
-	return fmt.Sprintf("%s:%d\n", file, line)
+	return fmt.Sprintf("\n%s:%d", file, line)
 }
 
 // this func copy from assert
@@ -46,54 +45,54 @@ func isEmpty(object interface{}) bool {
 
 func True(t *testing.T, check bool) {
 	if !check {
-		t.Errorf("%vNot True:\n", line())
+		t.Errorf("%v : Not True", line())
 	}
 }
 
 func False(t *testing.T, check bool) {
 	if check {
-		t.Errorf("%vNot False:\n", line())
+		t.Errorf("%v : Not False", line())
 	}
 }
 
 func Equal(t *testing.T, a, b interface{}) {
 	if a != b && !reflect.DeepEqual(a, b) {
-		t.Errorf("%vNot Equal:\n%v\n%v", line(), a, b)
+		t.Errorf("%v : Not Equal: %v == %v", line(), a, b)
 	}
 }
 
 func NotEqual(t *testing.T, a, b interface{}) {
 	if a == b || reflect.DeepEqual(a, b) {
-		t.Errorf("%vEqual:\n%v\n%v", line(), a, b)
+		t.Errorf("%v : Equal: %v != %v", line(), a, b)
 	}
 }
 
 func Empty(t *testing.T, target interface{}) {
 	if !isEmpty(target) {
-		t.Errorf("%vNot Empty:\n%v", line(), target)
+		t.Errorf("%v : Not Empty: %v", line(), target)
 	}
 }
 
 func NotEmpty(t *testing.T, target interface{}) {
 	if isEmpty(target) {
-		t.Errorf("%vEmpty:\n%v", line(), target)
+		t.Errorf("%v : Empty: %v", line(), target)
 	}
 }
 
 func Nil(t *testing.T, stack interface{}) {
 	if stack != nil {
-		t.Errorf("%vNot Nil:\n%v", line(), stack)
+		t.Errorf("%v : Not Nil", line())
 	}
 }
 
 func NotNil(t *testing.T, stack interface{}) {
 	if stack == nil {
-		t.Errorf("%vNil:\n%v", line(), stack)
+		t.Errorf("%v : Nil: %v", line(), stack)
 	}
 }
 
 func Error(t *testing.T, err error) {
 	if err == nil {
-		t.Errorf("%vNot Error:\n%w", line(), err)
+		t.Errorf("%v : Not Error", line())
 	}
 }

@@ -44,15 +44,15 @@ func isEmpty(object interface{}) bool {
 	}
 }
 
-func True(t *testing.T, check bool, msg ...interface{}) {
+func True(t *testing.T, check bool) {
 	if !check {
-		t.Errorf("%vNot True:\n%v", line(), msg)
+		t.Errorf("%vNot True:\n", line())
 	}
 }
 
-func False(t *testing.T, check bool, msg ...interface{}) {
+func False(t *testing.T, check bool) {
 	if check {
-		t.Errorf("%vNot False:\n%v", line(), msg)
+		t.Errorf("%vNot False:\n", line())
 	}
 }
 

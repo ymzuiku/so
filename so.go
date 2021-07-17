@@ -15,26 +15,26 @@ func line() string {
 	return fmt.Sprintf("%s:%d (Method %s)\n", file, line, f.Name())
 }
 
-func True(t *testing.T, check bool, msg interface{}) {
+func True(t *testing.T, check bool, msg ...interface{}) {
 	if !check {
-		t.Errorf("%v%v", line(), msg)
+		t.Errorf("%v %v", line(), msg)
 	}
 }
 
-func False(t *testing.T, check bool, msg interface{}) {
+func False(t *testing.T, check bool, msg ...interface{}) {
 	if check {
-		t.Errorf("%v%v", line(), msg)
+		t.Errorf("%v %v", line(), msg)
 	}
 }
 
-func Nil(t *testing.T, stack interface{}) {
+func Nil(t *testing.T, stack interface{}, msg ...interface{}) {
 	if stack != nil {
-		t.Errorf("%v%v", line(), stack)
+		t.Errorf("%v %v%v", line(), stack, msg)
 	}
 }
 
-func Error(t *testing.T, err error) {
+func Error(t *testing.T, err error, msg ...interface{}) {
 	if err == nil {
-		t.Errorf("%v%w", line(), err)
+		t.Errorf("%v %w %v", line(), err, msg)
 	}
 }

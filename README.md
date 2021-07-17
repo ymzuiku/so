@@ -13,6 +13,7 @@ go get github.com/ymzuiku/so
 - `so.True`
 - `so.False`
 - `so.Nil`
+- `so.NotNil`
 - `so.Error`
 
 ## Use

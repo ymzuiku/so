@@ -33,6 +33,12 @@ func Nil(t *testing.T, stack interface{}, msg ...interface{}) {
 	}
 }
 
+func NotNil(t *testing.T, stack interface{}, msg ...interface{}) {
+	if stack == nil {
+		t.Errorf("%v %v%v", line(), stack, msg)
+	}
+}
+
 func Error(t *testing.T, err error, msg ...interface{}) {
 	if err == nil {
 		t.Errorf("%v %w %v", line(), err, msg)

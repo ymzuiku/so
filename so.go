@@ -46,54 +46,54 @@ func isEmpty(object interface{}) bool {
 
 func True(t *testing.T, check bool, msg ...interface{}) {
 	if !check {
-		t.Errorf("%v\n Not True:\n%v", line(), msg)
+		t.Errorf("%vNot True:\n%v", line(), msg)
 	}
 }
 
 func False(t *testing.T, check bool, msg ...interface{}) {
 	if check {
-		t.Errorf("%v\n Not False:\n%v", line(), msg)
+		t.Errorf("%vNot False:\n%v", line(), msg)
 	}
 }
 
 func Equal(t *testing.T, a, b interface{}) {
 	if a != b && !reflect.DeepEqual(a, b) {
-		t.Errorf("%v\n Not Equal:\n%v\n%v", line(), a, b)
+		t.Errorf("%vNot Equal:\n%v\n%v", line(), a, b)
 	}
 }
 
 func NotEqual(t *testing.T, a, b interface{}) {
 	if a == b || reflect.DeepEqual(a, b) {
-		t.Errorf("%v\n Equal:\n%v\n%v", line(), a, b)
+		t.Errorf("%vEqual:\n%v\n%v", line(), a, b)
 	}
 }
 
 func Empty(t *testing.T, target interface{}) {
 	if !isEmpty(target) {
-		t.Errorf("%v\n Not Empty:\n%v", line(), target)
+		t.Errorf("%vNot Empty:\n%v", line(), target)
 	}
 }
 
 func NotEmpty(t *testing.T, target interface{}) {
 	if isEmpty(target) {
-		t.Errorf("%v\n Empty:\n%v", line(), target)
+		t.Errorf("%vEmpty:\n%v", line(), target)
 	}
 }
 
 func Nil(t *testing.T, stack interface{}) {
 	if stack != nil {
-		t.Errorf("%v\n NotNil:%v", line(), stack)
+		t.Errorf("%vNotNil:%v", line(), stack)
 	}
 }
 
 func NotNil(t *testing.T, stack interface{}) {
 	if stack == nil {
-		t.Errorf("%v\n Nil:\n%v", line(), stack)
+		t.Errorf("%vNil:\n%v", line(), stack)
 	}
 }
 
 func Error(t *testing.T, err error) {
 	if err == nil {
-		t.Errorf("%v\n Not Error:\n%w", line(), err)
+		t.Errorf("%vNot Error:\n%w", line(), err)
 	}
 }

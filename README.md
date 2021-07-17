@@ -1,6 +1,6 @@
 # so
 
-Tiny assert in go
+Tiny assert in go, No nonsense log.
 
 ## Install
 
@@ -15,6 +15,10 @@ go get github.com/ymzuiku/so
 - `so.Nil`
 - `so.NotNil`
 - `so.Error`
+- `so.Equal`
+- `so.NotEqual`
+- `so.Empty`
+- `so.NotEmpty`
 
 ## Use
 

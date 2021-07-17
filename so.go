@@ -82,7 +82,7 @@ func NotEmpty(t *testing.T, target interface{}) {
 
 func Nil(t *testing.T, stack interface{}) {
 	if stack != nil {
-		t.Errorf("%vNotNil:\n%v", line(), stack)
+		t.Errorf("%vNot Nil:\n%v", line(), stack)
 	}
 }
 

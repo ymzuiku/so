@@ -2,45 +2,98 @@ package so
 
 import (
 	"fmt"
+	"reflect"
 	"runtime"
 	"testing"
 )
 
 func line() string {
-	pc, file, line, ok := runtime.Caller(2)
-	f := runtime.FuncForPC(pc)
+	_, file, line, ok := runtime.Caller(2)
+	// f := runtime.FuncForPC(pc)
 	if !ok {
 		return "[so]LineError runtime.Caller(2) Fail"
 	}
-	return fmt.Sprintf("%s:%d (Method %s)\n", file, line, f.Name())
+	return fmt.Sprintf("%s:%d\n", file, line)
+}
+
+// this func copy from assert
+func isEmpty(object interface{}) bool {
+
+	// get nil case out of the way
+	if object == nil {
+		return true
+	}
+
+	objValue := reflect.ValueOf(object)
+
+	switch objValue.Kind() {
+	// collection types are empty when they have no element
+	case reflect.Array, reflect.Chan, reflect.Map, reflect.Slice:
+		return objValue.Len() == 0
+		// pointers are empty if nil or if the value they point to is empty
+	case reflect.Ptr:
+		if objValue.IsNil() {
+			return true
+		}
+		deref := objValue.Elem().Interface()
+		return isEmpty(deref)
+		// for all other types, compare against the zero value
+	default:
+		zero := reflect.Zero(objValue.Type())
+		return reflect.DeepEqual(object, zero.Interface())
+	}
 }
 
 func True(t *testing.T, check bool, msg ...interface{}) {
 	if !check {
-		t.Errorf("%v %v", line(), msg)
+		t.Errorf("%v\n Not True:\n%v", line(), msg)
 	}
 }
 
 func False(t *testing.T, check bool, msg ...interface{}) {
 	if check {
-		t.Errorf("%v %v", line(), msg)
+		t.Errorf("%v\n Not False:\n%v", line(), msg)
 	}
 }
 
-func Nil(t *testing.T, stack interface{}, msg ...interface{}) {
+func Equal(t *testing.T, a, b interface{}) {
+	if a != b && !reflect.DeepEqual(a, b) {
+		t.Errorf("%v\n Not Equal:\n%v\n%v", line(), a, b)
+	}
+}
+
+func NotEqual(t *testing.T, a, b interface{}) {
+	if a == b || reflect.DeepEqual(a, b) {
+		t.Errorf("%v\n Equal:\n%v\n%v", line(), a, b)
+	}
+}
+
+func Empty(t *testing.T, target interface{}) {
+	if !isEmpty(target) {
+		t.Errorf("%v\n Not Empty:\n%v", line(), target)
+	}
+}
+
+func NotEmpty(t *testing.T, target interface{}) {
+	if isEmpty(target) {
+		t.Errorf("%v\n Empty:\n%v", line(), target)
+	}
+}
+
+func Nil(t *testing.T, stack interface{}) {
 	if stack != nil {
-		t.Errorf("%v %v%v", line(), stack, msg)
+		t.Errorf("%v\n NotNil:%v", line(), stack)
 	}
 }
 
-func NotNil(t *testing.T, stack interface{}, msg ...interface{}) {
+func NotNil(t *testing.T, stack interface{}) {
 	if stack == nil {
-		t.Errorf("%v %v%v", line(), stack, msg)
+		t.Errorf("%v\n Nil:\n%v", line(), stack)
 	}
 }
 
-func Error(t *testing.T, err error, msg ...interface{}) {
+func Error(t *testing.T, err error) {
 	if err == nil {
-		t.Errorf("%v %w %v", line(), err, msg)
+		t.Errorf("%v\n Not Error:\n%w", line(), err)
 	}
 }

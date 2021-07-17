@@ -8,6 +8,13 @@ Tiny assert in go
 go get github.com/ymzuiku/so
 ```
 
+## APIs
+
+- `so.True`
+- `so.False`
+- `so.Nil`
+- `so.Error`
+
 ## Use
 
 ```go

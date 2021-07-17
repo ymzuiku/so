@@ -15,15 +15,15 @@ func line() string {
 	return fmt.Sprintf("%s:%d (Method %s)\n", file, line, f.Name())
 }
 
-func True(t *testing.T, check bool, stack interface{}) {
+func True(t *testing.T, check bool, msg interface{}) {
 	if !check {
-		t.Errorf("%v%v", line(), stack)
+		t.Errorf("%v%v", line(), msg)
 	}
 }
 
-func False(t *testing.T, check bool, stack interface{}) {
+func False(t *testing.T, check bool, msg interface{}) {
 	if check {
-		t.Errorf("%v%v", line(), stack)
+		t.Errorf("%v%v", line(), msg)
 	}
 }
 

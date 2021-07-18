@@ -90,14 +90,14 @@ func NotEmpty(t *testing.T, target interface{}) {
 // Check object == nil
 func Nil(t *testing.T, stack interface{}) {
 	if stack != nil {
-		t.Errorf("%v : Not Nil", line())
+		t.Errorf("%v : Not Nil: %v", line(), stack)
 	}
 }
 
 // Check object != nil
 func NotNil(t *testing.T, stack interface{}) {
 	if stack == nil {
-		t.Errorf("%v : Nil: %v", line(), stack)
+		t.Errorf("%v : Nil", line())
 	}
 }
 

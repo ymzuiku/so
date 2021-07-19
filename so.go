@@ -2,16 +2,33 @@ package so
 
 import (
 	"fmt"
+	"os"
 	"reflect"
+	"regexp"
 	"runtime"
+	"sync"
 	"testing"
 )
+
+var createPwdRegOnce sync.Once
+
+var pwdReg *regexp.Regexp
+
+func createPwdReg() {
+	pwd := os.Getenv("pwd")
+	pwdReg = regexp.MustCompile(pwd)
+}
 
 func line() string {
 	_, file, line, ok := runtime.Caller(2)
 	if !ok {
 		return "[so]LineError runtime.Caller(2) Fail"
 	}
+	createPwdRegOnce.Do(createPwdReg)
+	if pwdReg != nil {
+		file = pwdReg.ReplaceAllString(file, "")
+	}
+
 	return fmt.Sprintf("\n%s:%d", file, line)
 }
 

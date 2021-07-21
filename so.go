@@ -1,6 +1,7 @@
 package so
 
 import (
+	"errors"
 	"fmt"
 	"reflect"
 	"runtime"
@@ -102,9 +103,22 @@ func NotNil(t *testing.T, stack interface{}) {
 	}
 }
 
-// Check error != nil
-func Error(t *testing.T, err error) {
+// chekcer is error or func(error) bool
+func Error(t *testing.T, err error, checker ...interface{}) {
 	if err == nil {
-		t.Errorf("%v Not Error", line())
+		t.Errorf("%v Error is Nil", line())
+	}
+
+	for i, check := range checker {
+		switch v := check.(type) {
+		case error:
+			if !errors.Is(err, v) {
+				t.Errorf("%v Error[%d] %v\n", line(), i+1, err)
+			}
+		case func(error) bool:
+			if !v(err) {
+				t.Errorf("%v Erros[%d] %v\n", line(), i+1, err)
+			}
+		}
 	}
 }

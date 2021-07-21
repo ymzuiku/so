@@ -30,6 +30,23 @@ func cat() error {
 	return nil
 }
 
+type errDog struct {
+	Msg string
+}
+
+func (e errDog) Error() string {
+	return e.Msg + ""
+}
+func IsErrDog(err error) bool {
+	_, ok := err.(errDog)
+	return ok
+}
+
+func getErrDog() error {
+	var err1 = errDog{Msg: "the dog"}
+	return err1
+}
+
 func TestAssetx(t *testing.T) {
 	t.Run("error", func(t *testing.T) {
 		err := dog()
@@ -167,4 +184,14 @@ func TestAssetx(t *testing.T) {
 		so.NotEmpty(t, c3)
 	})
 
+	t.Run("error is", func(t *testing.T) {
+		var err1 = errors.New("dog")
+		so.Error(t, err1, err1)
+	})
+
+	t.Run("error checker", func(t *testing.T) {
+		err := getErrDog()
+
+		so.Error(t, err, IsErrDog)
+	})
 }

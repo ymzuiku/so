@@ -1,2 +1,2 @@
 test:
-	go test ./sotest/...
+	go test ./sotest/... -cover

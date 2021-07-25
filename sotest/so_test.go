@@ -194,4 +194,9 @@ func TestAssetx(t *testing.T) {
 
 		so.Error(t, err, IsErrDog)
 	})
+
+	t.Run("error checker nil", func(t *testing.T) {
+		var err error
+		so.Error(t, err, nil)
+	})
 }

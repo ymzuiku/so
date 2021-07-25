@@ -105,19 +105,26 @@ func NotNil(t *testing.T, stack interface{}) {
 
 // chekcer is error or func(error) bool
 func Error(t *testing.T, err error, checker ...interface{}) {
-	if err == nil {
-		t.Errorf("%v Error is Nil", line())
+	if len(checker) == 0 {
+		if err == nil {
+			t.Errorf("%v Error is Nil", line())
+		}
+		return
 	}
 
-	for i, check := range checker {
+	if checker[0] == nil && err == nil {
+		return
+	}
+
+	for _, check := range checker {
 		switch v := check.(type) {
 		case error:
 			if !errors.Is(err, v) {
-				t.Errorf("%v Error[%d] %v\n", line(), i+1, err)
+				t.Errorf("%v Error isn't type:%v %v\n", line(), checker, err)
 			}
 		case func(error) bool:
 			if !v(err) {
-				t.Errorf("%v Erros[%d] %v\n", line(), i+1, err)
+				t.Errorf("%v Erros checker fail %v\n", line(), err)
 			}
 		}
 	}

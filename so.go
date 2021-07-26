@@ -6,15 +6,17 @@ import (
 	"reflect"
 	"runtime"
 	"testing"
+
+	"github.com/fatih/color"
 )
 
 func line() string {
 	_, file, line, ok := runtime.Caller(2)
 	if !ok {
-		return "[so]LineError runtime.Caller(2) Fail"
+		return color.GreenString("[so]LineError runtime.Caller(2) Fail")
 	}
 
-	return fmt.Sprintf("\n%s:%d", file, line)
+	return color.GreenString(fmt.Sprintf("\n%s:%d", file, line))
 }
 
 // Check object is empty
